@@ -1,11 +1,13 @@
 import pyautogui
 import time
 import random
+import os
 
 from pyautogui import ImageNotFoundException
 
 coin = "button/coin.png"
 happy_button = "button/happy_button.png"
+clear = lambda: os.system('cls')
 
 
 def farm():
@@ -21,13 +23,17 @@ def farm():
     max_energy = 5000
     tap = 4
     tap_boost = 0
+    
+    clear()
     print("Начало фарма")
     while tap < max_energy:
         pyautogui.PAUSE = 0.00001
         try:
             coin_locate = pyautogui.locateCenterOnScreen(coin, confidence=0.7)
         except ImageNotFoundException:
+            clear()
             print("Монета не найдена")
+            print(f'Получено бустов: {tap_boost}')
             time_rand = random.randint(1000, 1250)
             print(f"Спим: {time_rand} секунд")
             time.sleep(time_rand)
@@ -46,8 +52,9 @@ def farm():
                 pyautogui.moveTo(boost)
                 pyautogui.leftClick(interval=0.0001)
                 tap_boost += 1
+                print(f'Нажал по бусту: {tap_boost} раз')
     else:
-        print(f"Tap boost: {tap_boost}")
+        print(f"Получено бустов: {tap_boost}")
         print("Конец блять")
 
 
@@ -59,4 +66,5 @@ if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
+        clear()
         print("Вышли с потока")
