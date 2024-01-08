@@ -1,4 +1,5 @@
 import pyautogui
+from pyautogui import ImageNotFoundException
 
 coin = "button/coin.png"
 happy_button = "button/happy_button.png"
@@ -12,19 +13,22 @@ def farm():
     while minimum < energy:
         pyautogui.PAUSE = 0.00001
         try:
-            x, y = pyautogui.locateCenterOnScreen(coin, confidence=0.8)
-            pyautogui.moveTo(x, y)
-            pyautogui.leftClick()
+            coin_locate = pyautogui.locateCenterOnScreen(coin, confidence=0.7)
+        except ImageNotFoundException:
+            print('Монета не найдена')
+            break
+        else:
+            pyautogui.moveTo(coin_locate)
+            pyautogui.leftClick(interval=0.0001)
             energy -= tick
-            if pyautogui.ImageNotFoundException:
+            try:
+                boost = pyautogui.locateCenterOnScreen(happy_button, confidence=0.7)
+            except ImageNotFoundException:
+                print('Буст не найден')
                 continue
             else:
-                z, y = pyautogui.locateCenterOnScreen(happy_button, confidence=0.9)
-                pyautogui.moveTo(z, y)
-                pyautogui.leftClick()
-        except pyautogui.ImageNotFoundException:
-            print("Монетка пропала!")
-            break
+                pyautogui.moveTo(boost)
+                pyautogui.leftClick(interval=0.0001)
     else:
         print(f"Energy: {energy}")
         print("Конец блять")
