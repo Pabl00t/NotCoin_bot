@@ -5,16 +5,18 @@ happy_button = 'button/happy_button.png'
 
 
 def farm():
-    tick = 10
+    
+    tick = 9
+    minimum = 10
     energy = 5000
     print('Начало фарма')
-    while tick < energy:
+    while minimum < energy:
         pyautogui.PAUSE = 0.00001
         try:
             x, y = pyautogui.locateCenterOnScreen(coin, confidence= 0.8)
             pyautogui.moveTo(x,y)
             pyautogui.leftClick()
-            energy -= 9
+            energy -= tick
             if pyautogui.ImageNotFoundException:
                 continue
             else:
