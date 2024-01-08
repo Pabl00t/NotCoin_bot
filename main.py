@@ -40,7 +40,7 @@ def farm():
             continue
         else:
             pyautogui.moveTo(coin_locate)
-            pyautogui.leftClick(interval=0.0001)
+            pyautogui.click(clicks=2)
             max_energy -= tap
 
             try:
@@ -50,7 +50,7 @@ def farm():
                 continue
             else:
                 pyautogui.moveTo(boost)
-                pyautogui.leftClick(interval=0.0001)
+                pyautogui.click(clicks=2)
                 tap_boost += 1
                 print(f'Нажал по бусту: {tap_boost} раз')
     else:
