@@ -12,40 +12,42 @@ def farm():
     """
     5000 энергии воспольняются 1250 секунд
     Время = (Цель - Начальное значение) / Прирост энергии
-    
+
     Цель = 5000
     Начальное значение = 0
     Прирост энергии = 4
 
     """
-    tick = 9
-    minimum = 10
-    energy = 5000
+    max_energy = 5000
+    tap = 4
+    tap_boost = 0
     print("Начало фарма")
-    while minimum < energy:
+    while tap < max_energy:
         pyautogui.PAUSE = 0.00001
         try:
             coin_locate = pyautogui.locateCenterOnScreen(coin, confidence=0.7)
         except ImageNotFoundException:
-            print('Монета не найдена')
+            print("Монета не найдена")
             time_rand = random.randint(1000, 1250)
-            print(f'Спим: {time_rand} секунд')
+            print(f"Спим: {time_rand} секунд")
             time.sleep(time_rand)
             continue
         else:
             pyautogui.moveTo(coin_locate)
             pyautogui.leftClick(interval=0.0001)
-            energy -= tick
+            max_energy -= tap
+
             try:
                 boost = pyautogui.locateCenterOnScreen(happy_button, confidence=0.7)
             except ImageNotFoundException:
-                print('Буст не найден')
+                print("Буст не найден")
                 continue
             else:
                 pyautogui.moveTo(boost)
                 pyautogui.leftClick(interval=0.0001)
+                tap_boost += 1
     else:
-        print(f"Energy: {energy}")
+        print(f"Tap boost: {tap_boost}")
         print("Конец блять")
 
 
